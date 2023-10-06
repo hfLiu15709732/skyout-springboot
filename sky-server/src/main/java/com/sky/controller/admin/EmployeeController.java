@@ -1,6 +1,7 @@
 package com.sky.controller.admin;
 
 import com.sky.constant.JwtClaimsConstant;
+import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
 import com.sky.entity.Employee;
 import com.sky.properties.JwtProperties;
@@ -8,12 +9,11 @@ import com.sky.result.Result;
 import com.sky.service.EmployeeService;
 import com.sky.utils.JwtUtil;
 import com.sky.vo.EmployeeLoginVO;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +23,9 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/admin/employee")
+@ResponseBody
 @Slf4j
+@Api(tags = "B端员工管理相关接口")
 public class EmployeeController {
 
     @Autowired
@@ -37,6 +39,7 @@ public class EmployeeController {
      * @param employeeLoginDTO
      * @return
      */
+    @ApiOperation(value = "员工登录")
     @PostMapping("/login")
     public Result<EmployeeLoginVO> login(@RequestBody EmployeeLoginDTO employeeLoginDTO) {
         log.info("员工登录：{}", employeeLoginDTO);
@@ -66,8 +69,24 @@ public class EmployeeController {
      *
      * @return
      */
+    @ApiOperation(value = "员工退出")
     @PostMapping("/logout")
     public Result<String> logout() {
+        return Result.success();
+    }
+
+
+    /**
+     * 新增员工
+     *
+     * @return
+     */
+    @ApiOperation(value = "新增员工")
+    @PostMapping//全局类已经设置了路径，使用restful进行开发
+    public Result<String> save(@RequestBody EmployeeDTO employeeDTO) {
+        //前端传来的是json，要用@RequestBody
+        log.info("新增员工--{}",employeeDTO);//将信息打印，employeeDTO匹配前面的{}
+        employeeService.save(employeeDTO);
         return Result.success();
     }
 
