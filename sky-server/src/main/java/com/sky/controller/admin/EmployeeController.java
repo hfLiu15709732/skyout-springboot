@@ -107,4 +107,47 @@ public class EmployeeController {
         return Result.success(pageResult);
     }
 
+
+    /**
+     * 修改员工状态
+     *
+     * @return
+     */
+    @ApiOperation(value = "员工状态修改")
+    @PostMapping  ("/status/{status}")
+    public Result setStatus(@PathVariable(value = "status") Integer status,long id) {
+        //前端传来的是json，要用@RequestBody
+        log.info("员工状态修改--{}修改为{}",id,status);//将信息打印，employeeDTO匹配前面的{}
+        employeeService.setStatus(status,id);
+        return Result.success();
+    }
+
+    /**
+     * 根据Id查询数据
+     *
+     * @return
+     */
+    @ApiOperation(value = "根据ID查询员工信息")
+    @GetMapping  ("/{id}")
+    public Result findById(@PathVariable(value = "id") long id) {
+        //前端传来的是json，要用@RequestBody
+        log.info("员工信息查询--员工id修改为{}",id);
+        Employee employee = employeeService.findById(id);
+        return Result.success(employee);
+    }
+
+    /**
+     * 修改用户信息
+     *
+     * @return
+     */
+    @ApiOperation(value = "修改人员信息")
+    @PutMapping
+    public Result update(@RequestBody EmployeeDTO employeeDTO) {
+        //前端传来的是json，要用@RequestBody
+        log.info("员工信息修改--{}",employeeDTO);
+        employeeService.update(employeeDTO);
+        return Result.success();
+    }
+
 }

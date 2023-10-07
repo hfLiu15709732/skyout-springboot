@@ -18,6 +18,9 @@ public interface EmployeeMapper {
     @Select("select * from employee where username = #{username}")
     Employee getByUsername(String username);
 
+    @Select("select * from employee where id = #{id}")
+    Employee findById(long id);
+
 
     /**
      * 添加员工信息
@@ -30,4 +33,7 @@ public interface EmployeeMapper {
     void insert(Employee employee);
 
     Page<Employee> pageQuery(EmployeePageQueryDTO employeePageQueryDTO);
+
+    void update(Employee employee);
+
 }
