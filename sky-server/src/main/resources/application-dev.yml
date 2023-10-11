@@ -11,4 +11,9 @@ sky:
     endpoint: oss-cn-beijing.aliyuncs.com
     bucket-name: sky-lhf
     access-key-secret: K5mBA21mnYFgREjuESy7mp5uxGINNQ
+  redis:
+    host: localhost
+#    password: 111
+    port: 6379
+    database: 10
 
