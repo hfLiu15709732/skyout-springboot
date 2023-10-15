@@ -4,6 +4,8 @@ import com.sky.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.Map;
+
 /**
  * @author M
  * @version 1.0
@@ -15,9 +17,20 @@ import org.apache.ibatis.annotations.Select;
 public interface UserMapper {
 
 
-    @Select("select * from user where id=#{openid}")
+    @Select("select * from user where openid=#{openid}")
     User getByopenid(String openid);
 
 
     void insert(User user);
+
+
+    @Select("select * from user where id = #{id}")
+    User getById(Long userId);
+
+    /**
+     * 根据动态条件统计用户数量
+     * @param map
+     * @return
+     */
+    Integer countByMap(Map map);
 }
