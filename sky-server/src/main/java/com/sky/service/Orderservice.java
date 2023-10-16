@@ -79,4 +79,6 @@ public interface Orderservice {
      * @return
      */
     OrderStatisticsVO statistics();
+
+    void reminder(Long id);
 }
