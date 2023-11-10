@@ -93,12 +93,16 @@ public class OrderServiceImpl implements Orderservice {
         }
 
         // 1.向订单表插入一条数据
+        // TODO address是增加搜索速度的冗余字段，插入时需要查数据库才行
+        AddressBook addressBook1 = addressBookMapper.getById(ordersSubmitDTO.getAddressBookId());
+        String addressName=addressBook1.getProvinceName()+addressBook1.getCityName()+addressBook1.getDistrictName()+addressBook1.getDetail();
 
         Orders orders=new Orders();
         BeanUtils.copyProperties(ordersSubmitDTO,orders);
         orders.setOrderTime(LocalDateTime.now());
         orders.setPayStatus(Orders.UN_PAID);
         orders.setStatus(Orders.PENDING_PAYMENT);
+        orders.setAddress(addressName);
         orders.setNumber(String.valueOf(System.currentTimeMillis()));
         orders.setPhone(addressBook.getPhone());
         orders.setUserId(currentId);
